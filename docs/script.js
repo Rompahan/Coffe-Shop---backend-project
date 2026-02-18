@@ -7,19 +7,19 @@ const API_URL = 'https://coffe-shop-backend-project.onrender.com';
 
 // Font Awesome иконки для категорий
 const CATEGORY_ICON = {
-  espresso:  '<i class="fas fa-coffee"></i>',
-  cappuccino:'<i class="fas fa-mug-hot"></i>',
-  latte:     '<i class="fas fa-glass-whiskey"></i>',
-  tea:       '<i class="fas fa-leaf"></i>',
-  snack:     '<i class="fas fa-cookie-bite"></i>',
+  Espresso:  '<i class="fas fa-coffee"></i>',
+  Cappuccino:'<i class="fas fa-mug-hot"></i>',
+  Latte:     '<i class="fas fa-glass-whiskey"></i>',
+  Tea:       '<i class="fas fa-leaf"></i>',
+  IceLatte:  '<i class="fas fa-ice-cream"></i>',
 };
 
 const CATEGORY_LABELS = {
-  espresso:  'Эспрессо',
-  cappuccino:'Капучино',
-  latte:     'Латте',
-  tea:       'Чай',
-  snack:     'Закуска',
+  Espresso:  'Эспрессо',
+  Cappuccino:'Капучино',
+  Latte:     'Латте',
+  Tea:       'Чай',
+  IceLatte:  'Айс Латте',
 };
 
 // ===================== STATE =====================
@@ -268,7 +268,7 @@ function renderProductGrid(containerId, products, showAdmin) {
 }
 
 function productCard(p, showAdmin) {
-  const icon    = CATEGORY_ICON[p.category] || '<i class="fas fa-coffee"></i>';
+  const icon    = CATEGORY_ICON[p.category] || '<i class="fas fa-mug-hot"></i>';
   const catLabel = CATEGORY_LABELS[p.category] || p.category;
   const avail  = p.available !== false;
   const adminHTML = showAdmin ? `

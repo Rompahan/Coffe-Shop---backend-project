@@ -16,7 +16,7 @@ const productSchema = new mongoose.Schema({
   },
   category: {
     type: String,
-    enum: ['Espresso', 'Cappuccino', 'Latte', 'Tea', 'IceLatte'],
+    enum: ['espresso', 'cappuccino', 'latte', 'tea', 'snack', 'iceLatte'],
     required: true
   },
   available: {
