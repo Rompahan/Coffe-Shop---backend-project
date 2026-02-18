@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BrewHouse — Кофейня</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Loader -->
+  <div id="page-loader">
+    <div class="loader-inner">
+      <div class="loader-cup"><i class="fas fa-mug-hot"></i></div>
+      <div class="loader-bar"><div class="loader-fill"></div></div>
+    </div>
+  </div>
+
+  <!-- Toast Notifications -->
+  <div id="toast-container"></div>
+
+  <!-- NAV -->
+  <nav id="navbar">
+    <div class="nav-logo">
+      <span class="logo-icon"><i class="fas fa-mug-hot"></i></span>
+      <span class="logo-text">BrewHouse</span>
+    </div>
+    <div class="nav-links" id="nav-links">
+      <a href="#" class="nav-link active" data-page="home">Главная</a>
+      <a href="#" class="nav-link" data-page="menu">Меню</a>
+      <a href="#" class="nav-link nav-link-auth" data-page="profile" id="nav-profile" style="display:none"><i class="fas fa-user-circle"></i> Профиль</a>
+      <button class="btn-nav-login" id="nav-login-btn" onclick="openModal('login')">Войти</button>
+      <button class="btn-nav-logout" id="nav-logout-btn" style="display:none" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Выйти</button>
+    </div>
+    <button class="nav-burger" id="nav-burger">
+      <i class="fa fa-bars"></i>
+    </button>
+  </nav>
+
+  <!-- PAGES -->
+  <main id="app">
+
+    <!-- HOME PAGE -->
+    <section id="page-home" class="page active">
+      <div class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-content">
+          <p class="hero-tagline">Добро пожаловать</p>
+          <h1 class="hero-title">Каждая чашка —<br/><em>история вкуса</em></h1>
+          <p class="hero-sub">Свежеобжаренный кофе, тщательно отобранные зерна, сделанные с любовью.</p>
+          <div class="hero-actions">
+            <button class="btn-primary" onclick="navigate('menu')">Смотреть меню</button>
+            <button class="btn-outline" onclick="openModal('register')">Регистрация</button>
+          </div>
+        </div>
+        <div class="hero-visual">
+          <div class="hero-circle"></div>
+          <div class="hero-cup-big"><i class="fas fa-mug-hot"></i></div>
+          <div class="hero-floating f1"><i class="fas fa-seedling"></i> Arabica</div>
+          <div class="hero-floating f2"><i class="fas fa-globe-africa"></i> Ethiopia</div>
+          <div class="hero-floating f3"><i class="fas fa-star"></i> Single Origin</div>
+        </div>
+      </div>
+
+      <div class="section-preview">
+        <div class="section-header">
+          <p class="section-label">— Избранное</p>
+          <h2 class="section-title">Популярные напитки</h2>
+        </div>
+        <div class="products-grid" id="home-products-grid">
+          <div class="product-skeleton"></div>
+          <div class="product-skeleton"></div>
+          <div class="product-skeleton"></div>
+        </div>
+        <div class="section-action">
+          <button class="btn-primary" onclick="navigate('menu')">Всё меню <i class="fa fa-arrow-right"></i></button>
+        </div>
+      </div>
+
+      <div class="features-section">
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fas fa-seedling"></i></div>
+          <h3>Свежий обжар</h3>
+          <p>Зерна обжариваем каждую неделю для максимального вкуса</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fas fa-award"></i></div>
+          <h3>Лучший сервис</h3>
+          <p>Профессиональные бариста с многолетним опытом</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fas fa-globe-africa"></i></div>
+          <h3>Single Origin</h3>
+          <p>Кофе из лучших регионов Эфиопии, Колумбии, Кении</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- MENU PAGE -->
+    <section id="page-menu" class="page">
+      <div class="page-header">
+        <p class="section-label">— Напитки и закуски</p>
+        <h2 class="section-title">Наше Меню</h2>
+        <p class="page-desc">Выберите любимый напиток из нашей коллекции</p>
+      </div>
+
+      <!-- Admin add button -->
+      <div id="admin-add-bar" style="display:none" class="admin-bar">
+        <button class="btn-primary" onclick="openProductModal()"><i class="fa fa-plus"></i> Добавить продукт</button>
+      </div>
+
+      <div class="category-filter" id="category-filter">
+        <button class="cat-btn active" data-cat="all">Все</button>
+        <button class="cat-btn" data-cat="espresso">Эспрессо</button>
+        <button class="cat-btn" data-cat="cappuccino">Капучино</button>
+        <button class="cat-btn" data-cat="latte">Латте</button>
+        <button class="cat-btn" data-cat="tea">Чай</button>
+        <button class="cat-btn" data-cat="snack">Закуски</button>
+      </div>
+
+      <div class="products-grid" id="menu-products-grid">
+        <div class="product-skeleton"></div>
+        <div class="product-skeleton"></div>
+        <div class="product-skeleton"></div>
+        <div class="product-skeleton"></div>
+        <div class="product-skeleton"></div>
+        <div class="product-skeleton"></div>
+      </div>
+    </section>
+
+    <!-- PROFILE PAGE -->
+    <section id="page-profile" class="page">
+      <div class="page-header">
+        <p class="section-label">— Мой аккаунт</p>
+        <h2 class="section-title">Профиль</h2>
+      </div>
+      <div class="profile-container">
+        <div class="profile-card">
+          <div class="profile-avatar" id="profile-avatar"><i class="fas fa-user-circle"></i></div>
+          <div class="profile-info">
+            <div class="profile-badge" id="profile-role-badge"></div>
+            <h3 id="profile-username">—</h3>
+            <p id="profile-email" class="profile-email">—</p>
+            <p id="profile-created" class="profile-created"></p>
+          </div>
+        </div>
+        <div class="profile-edit-card">
+          <h3 class="card-title">Редактировать профиль</h3>
+          <form id="profile-form">
+            <div class="form-group">
+              <label><i class="fas fa-user"></i> Имя пользователя</label>
+              <input type="text" id="edit-username" placeholder="Введите имя" />
+            </div>
+            <div class="form-group">
+              <label><i class="fas fa-envelope"></i> Email</label>
+              <input type="email" id="edit-email" placeholder="Введите email" />
+            </div>
+            <button type="submit" class="btn-primary w-full"><i class="fas fa-save"></i> Сохранить изменения</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- MODALS -->
+
+  <!-- Login Modal -->
+  <div class="modal-overlay" id="modal-login">
+    <div class="modal">
+      <button class="modal-close" onclick="closeModal('login')"><i class="fa fa-times"></i></button>
+      <div class="modal-logo"><i class="fas fa-mug-hot"></i></div>
+      <h2 class="modal-title">Вход</h2>
+      <p class="modal-sub">Войдите в свой аккаунт</p>
+      <form id="login-form">
+        <div class="form-group">
+          <label><i class="fas fa-envelope"></i> Email</label>
+          <input type="email" id="login-email" placeholder="you@email.com" required />
+        </div>
+        <div class="form-group">
+          <label><i class="fas fa-lock"></i> Пароль</label>
+          <input type="password" id="login-password" placeholder="••••••••" required />
+        </div>
+        <button type="submit" class="btn-primary w-full" id="login-submit-btn"><i class="fas fa-sign-in-alt"></i> Войти</button>
+      </form>
+      <p class="modal-switch">Нет аккаунта? <a href="#" onclick="switchModal('login','register')">Зарегистрироваться</a></p>
+    </div>
+  </div>
+
+  <!-- Register Modal -->
+  <div class="modal-overlay" id="modal-register">
+    <div class="modal">
+      <button class="modal-close" onclick="closeModal('register')"><i class="fa fa-times"></i></button>
+      <div class="modal-logo"><i class="fas fa-mug-hot"></i></div>
+      <h2 class="modal-title">Регистрация</h2>
+      <p class="modal-sub">Создайте аккаунт бесплатно</p>
+      <form id="register-form">
+        <div class="form-group">
+          <label><i class="fas fa-user"></i> Имя пользователя</label>
+          <input type="text" id="reg-username" placeholder="Ваше имя" required />
+        </div>
+        <div class="form-group">
+          <label><i class="fas fa-envelope"></i> Email</label>
+          <input type="email" id="reg-email" placeholder="you@email.com" required />
+        </div>
+        <div class="form-group">
+          <label><i class="fas fa-lock"></i> Пароль</label>
+          <input type="password" id="reg-password" placeholder="Минимум 6 символов" required />
+        </div>
+        <button type="submit" class="btn-primary w-full" id="reg-submit-btn"><i class="fas fa-user-plus"></i> Создать аккаунт</button>
+      </form>
+      <p class="modal-switch">Уже есть аккаунт? <a href="#" onclick="switchModal('register','login')">Войти</a></p>
+    </div>
+  </div>
+
+  <!-- Product Modal (Add/Edit) -->
+  <div class="modal-overlay" id="modal-product">
+    <div class="modal modal-wide">
+      <button class="modal-close" onclick="closeModal('product')"><i class="fa fa-times"></i></button>
+      <h2 class="modal-title" id="product-modal-title">Добавить продукт</h2>
+      <form id="product-form">
+        <input type="hidden" id="product-id" />
+        <div class="form-row">
+          <div class="form-group">
+            <label><i class="fas fa-tag"></i> Название</label>
+            <input type="text" id="product-name" placeholder="Капучино" required />
+          </div>
+          <div class="form-group">
+            <label><i class="fas fa-coins"></i> Цена (₸)</label>
+            <input type="number" id="product-price" placeholder="200" required />
+          </div>
+        </div>
+        <div class="form-group">
+          <label><i class="fas fa-align-left"></i> Описание</label>
+          <textarea id="product-description" placeholder="Описание напитка..." rows="3"></textarea>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label><i class="fas fa-utensils"></i> Категория</label>
+            <select id="product-category">
+              <option value="espresso">Эспрессо</option>
+              <option value="cappuccino">Капучино</option>
+              <option value="latte">Латте</option>
+              <option value="tea">Чай</option>
+              <option value="snack">Закуска</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label><i class="fas fa-boxes"></i> Количество</label>
+            <input type="number" id="product-stock" placeholder="100" />
+          </div>
+        </div>
+        <div class="form-group form-check">
+          <input type="checkbox" id="product-available" checked />
+          <label for="product-available">Доступен для заказа</label>
+        </div>
+        <button type="submit" class="btn-primary w-full" id="product-submit-btn">Сохранить</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
