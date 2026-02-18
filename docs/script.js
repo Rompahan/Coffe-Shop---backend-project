@@ -3,7 +3,7 @@
 //  API: https://coffee-shop-api.onrender.com
 // ============================================================
 
-const API_URL = 'https://coffee-shop-api.onrender.com';
+const API_URL = 'https://coffe-shop-backend-project.onrender.com';
 
 // Font Awesome иконки для категорий
 const CATEGORY_ICON = {
